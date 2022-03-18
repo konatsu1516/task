@@ -1,4 +1,4 @@
-package com.example.task;
+package com.dmm.task;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
