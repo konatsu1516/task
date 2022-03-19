@@ -1,8 +1,8 @@
 package com.dmm.task.controller;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +37,26 @@ public class mainController {
 		List<List<LocalDate>> matrix = new ArrayList<>();
 		// 1週間分のLocalDateを格納するListを用意する
 		List<LocalDate> week = new ArrayList<>();
-		//カレンダーインスタンス
-		Calendar calendar = Calendar.getInstance();
-		//曜日を表すDayOfWeekを取得
-		int myDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-		//上で取得したLocalDateに曜日の値（DayOfWeek#getValue)をマイナスして前月分のLocalDateを求める
-		week.add(myDayOfWeek.getValue());
+		// 本日のLocalDateインスタンスを取得
+		LocalDate d = LocalDate.now();//(2022/03/19)
+		// 今月の1日を表現するLocalDateインスタンスを求める
+		d = LocalDate.of(d.getYear(), d.getMonthValue(), 1);//(2022/03/01)
+		// 今月の1日の曜日を求める
+		DayOfWeek w = d.getDayOfWeek();//(火曜つまり2)
+		// 前月分の最後の日曜日（つまり今月の1日がはじまる日曜日）のLocalDateを求める
+		LocalDate start = d.minusDays(w.getValue());
+		//月末を求める
+		int lastDay=d.lengthOfMonth();
+		
+		for(int j=0;j<lastDay;j++) {
+			for(int i=0;i<7;i++) {
+				week.add(start);
+				start=start.plusDays(1);
+				
+			}
+			matrix.add(week);
+			System.out.println(matrix);
+		}
 		
         return "main";
     }
