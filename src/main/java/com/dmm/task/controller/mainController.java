@@ -48,15 +48,44 @@ public class mainController {
 		//月末を求める
 		int lastDay=d.lengthOfMonth();
 		
-		for(int j=0;j<lastDay;j++) {
-			for(int i=0;i<7;i++) {
-				week.add(start);
-				start=start.plusDays(1);
-				
-			}
-			matrix.add(week);
-			System.out.println(matrix);
+		for(int i=0;i<7;i++) {
+			week.add(start);
+			start=start.plusDays(1);
 		}
+		matrix.add(week);
+		System.out.println(matrix);
+		
+		List<LocalDate> week2 = new ArrayList<>();
+		for(int i=0;i<7;i++) {
+			week2.add(start);
+			start=start.plusDays(1);
+		}
+		matrix.add(week2);
+		System.out.println(matrix);
+		
+		List<LocalDate> week3 = new ArrayList<>();
+		for(int i=0;i<7;i++) {
+			week3.add(start);
+			start=start.plusDays(1);
+		}
+		matrix.add(week3);
+		System.out.println(matrix);
+		
+		List<LocalDate> week4 = new ArrayList<>();
+		for(int i=0;i<7;i++) {
+			week4.add(start);
+			start=start.plusDays(1);
+		}
+		matrix.add(week4);
+		System.out.println(matrix);
+		
+		List<LocalDate> week5 = new ArrayList<>();
+		for(int i=0;i<7;i++) {
+			week5.add(start);
+			start=start.plusDays(1);
+		}
+		matrix.add(week5);
+		System.out.println(matrix);
 		
         return "main";
     }
