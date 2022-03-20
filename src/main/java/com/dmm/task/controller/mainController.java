@@ -2,6 +2,7 @@ package com.dmm.task.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +19,10 @@ import com.dmm.task.data.repository.TasksRepository;
 @Controller
 public class mainController {
 	@Autowired //@Autowiredアノテーションを付けると、Spring Bootが自動でインスタンスをInjectします。
-	  private TasksRepository task;
+	  private TasksRepository taskRepository;
 	
 	@GetMapping("/main")
 	 public String main(Model model) {
-		
-//		int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-//		model.addAttribute("thisYear", thisYear);
-//		int thisMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-//		model.addAttribute("thisMonth", thisMonth);
-//		
-//		new MyCalendar(thisYear, thisMonth);
-		
 		
 		// 1. MultiMapインスタンスの作成
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
@@ -48,46 +41,31 @@ public class mainController {
 		//月末を求める
 		int lastDay=d.lengthOfMonth();
 		
-		for(int i=0;i<7;i++) {
-			week.add(start);
-			start=start.plusDays(1);
-		}
-		matrix.add(week);
-		System.out.println(matrix);
+		//d(2022-03-01)とstart(2022-02-27)の日数の差を求める。結果はP-2D
+		Period period = Period.between(d, start);
+		//periodをint型に変換する。結果は2
+		int days = Math.abs(period.getDays());
 		
-		List<LocalDate> week2 = new ArrayList<>();
-		for(int i=0;i<7;i++) {
-			week2.add(start);
-			start=start.plusDays(1);
-		}
-		matrix.add(week2);
-		System.out.println(matrix);
+			//int iにstartとdの差、つまり-1となるように入れる
+			for(int i=1-days;i<lastDay;i+=7) {
+				for(int j=0;j<7;j++) {
+					week.add(start);
+					start=start.plusDays(1);
+				}
+				matrix.add(week);
+				week = new ArrayList<>();
+			}
+		model.addAttribute("matrix", matrix);
+		model.addAttribute("week", week);
 		
-		List<LocalDate> week3 = new ArrayList<>();
-		for(int i=0;i<7;i++) {
-			week3.add(start);
-			start=start.plusDays(1);
-		}
-		matrix.add(week3);
-		System.out.println(matrix);
 		
-		List<LocalDate> week4 = new ArrayList<>();
-		for(int i=0;i<7;i++) {
-			week4.add(start);
-			start=start.plusDays(1);
-		}
-		matrix.add(week4);
-		System.out.println(matrix);
+		Tasks a=new Tasks();
 		
-		List<LocalDate> week5 = new ArrayList<>();
-		for(int i=0;i<7;i++) {
-			week5.add(start);
-			start=start.plusDays(1);
-		}
-		matrix.add(week5);
-		System.out.println(matrix);
+		tasks.add(start, a);		
+		model.addAttribute("tasks", tasks);
 		
         return "main";
+        
     }
 	
 
