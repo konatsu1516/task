@@ -3,9 +3,11 @@ package com.dmm.task.controller;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dmm.task.data.entity.Tasks;
@@ -19,8 +21,8 @@ public class createController {
 	@Autowired //@Autowiredアノテーションを付けると、Spring Bootが自動でインスタンスをInjectします。
 	  private TasksRepository taskRepository;
 	
-	@GetMapping("/create")
-    public String create() {
+	@GetMapping("/main/create/{date}")
+    public String create(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date date)  {
         return "create";
     }
 	
