@@ -1,7 +1,5 @@
 package com.dmm.task.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,10 +28,9 @@ public class createController {
     public String mainCreate(TasksForm tasksForm, @AuthenticationPrincipal AccountUserDetails user) {
       Tasks myTask = new Tasks();
       myTask.setTitle(tasksForm.getTitle());
-      myTask.setDate(LocalDate.now());
+      myTask.setDate(tasksForm.getDate());
       myTask.setText(tasksForm.getText());
      
-
       taskRepository.save(myTask);
 
       return "redirect:/main";
