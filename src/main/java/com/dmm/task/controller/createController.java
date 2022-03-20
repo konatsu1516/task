@@ -1,6 +1,6 @@
 package com.dmm.task.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,17 +22,17 @@ public class createController {
 	  private TasksRepository taskRepository;
 	
 	@GetMapping("/main/create/{date}") 
-    public String create(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDateTime date)  {
+    public String create(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDate date)  {
         return "create";
     }
 	
 	@PostMapping("/main/create")
     public String mainCreate(TasksForm tasksForm, @AuthenticationPrincipal AccountUserDetails user) {
       Tasks myTask = new Tasks();
-      myTask.setName(user.getName());
       myTask.setTitle(tasksForm.getTitle());
+      myTask.setDate(LocalDate.now());
       myTask.setText(tasksForm.getText());
-      myTask.setDay(LocalDateTime.now());
+     
 
       taskRepository.save(myTask);
 
