@@ -21,8 +21,8 @@ public class createController {
 	@Autowired //@Autowiredアノテーションを付けると、Spring Bootが自動でインスタンスをInjectします。
 	  private TasksRepository taskRepository;
 	
-	@GetMapping("/main/create/{date}")
-    public String create(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date date)  {
+	@GetMapping("/main/create/{date}") 
+    public String create(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDateTime date)  {
         return "create";
     }
 	
