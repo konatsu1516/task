@@ -27,9 +27,11 @@ public class createController {
 	@PostMapping("/main/create")
     public String mainCreate(TasksForm tasksForm, @AuthenticationPrincipal AccountUserDetails user) {
       Tasks myTask = new Tasks();
+      myTask.setName(user.getName());
       myTask.setTitle(tasksForm.getTitle());
       myTask.setDate(tasksForm.getDate());
       myTask.setText(tasksForm.getText());
+      myTask.setDone(false);
      
       taskRepository.save(myTask);
 

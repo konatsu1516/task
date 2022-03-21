@@ -59,9 +59,17 @@ public class mainController {
 		model.addAttribute("week", week);
 		
 		
-		Tasks a=new Tasks();
 		
-		tasks.add(start, a);		
+		
+		List<Tasks> allTasks = taskRepository.findAll();
+		
+		for(int i=0;i<allTasks.size();i++) {
+			tasks.add(allTasks.get(i).getDate(), allTasks.get(i));	
+		}
+				
+		
+		
+		
 		model.addAttribute("tasks", tasks);
 		
         return "main";
