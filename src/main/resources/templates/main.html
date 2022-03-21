@@ -35,9 +35,9 @@
       class="prevnext" href="javascript:form1.submit()">keyboard_arrow_left</a></span>
     </form>
     <!-- ◯○◯○年◯○月表示 -->
-    <span ></span><!-- カレンダー情報の紐付け th:each="thisYear : ${thisYear}" th:text="${thisYear}"-->
+    <span th:each="thisYear : ${thisYear}" th:text="${thisYear}"></span><!-- カレンダー情報の紐付け th:each="thisYear : ${thisYear}" th:text="${thisYear}"-->
     <span>年</span>
-    <span></span>
+    <span th:each="thisMonth : ${thisMonth}" th:text="${thisMonth}"></span>
     <span>月</span>
  
   
