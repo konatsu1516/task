@@ -45,6 +45,9 @@ public class mainController {
 		LocalDate start = d.minusDays(w.getValue());
 		//月末を求める
 		int lastDay=d.lengthOfMonth();
+		// 月末を表現するLocalDateインスタンスを求める
+		LocalDate endOfMonth=LocalDate.now();
+		endOfMonth = LocalDate.of(endOfMonth.getYear(), endOfMonth.getMonthValue(), lastDay);//(2022/03/31)
 		
 		//d(2022-03-01)とstart(2022-02-27)の日数の差を求める。結果はP-2D
 		Period period = Period.between(d, start);
@@ -69,10 +72,24 @@ public class mainController {
 		model.addAttribute("thisMonth", thisMonth);
 		
 		
-		List<Tasks> allTasks = taskRepository.findAll();
+		List<Tasks> allTasks = taskRepository.findByDateBetween(start,endOfMonth,"admin-name");
 		
+		//ユーザーごとのデータ絞り込み処理
+		// データベースからアカウント情報を取得する
+	   // Users user = usersRepository.findById(userName).get();
+	    //allTasksリストをストリームにして新たなnotAdminTasksリストにする
+		//List<Tasks> notAdminTasks = allTasks.stream()
+				//タスクのユーザーネームとアカウントのユーザーネームが同じものをフィルターかける
+				//.filter(t -> t.getName() .equals (user.getName()))
+				//フィルターをかけたものを新たなリストとして生成
+				//.collect(Collectors.toList());
+		
+		//for(int i=0;i<notAdminTasks.size();i++) {
+			//tasks.add(notAdminTasks.get(i).getDate(), notAdminTasks.get(i));	
+		//}
+			
 		for(int i=0;i<allTasks.size();i++) {
-			tasks.add(allTasks.get(i).getDate(), allTasks.get(i));	
+		tasks.add(allTasks.get(i).getDate(), allTasks.get(i));	
 		}
 		
 		model.addAttribute("tasks", tasks);
@@ -80,22 +97,6 @@ public class mainController {
         return "main";
         
     }
-//		
-//		//ユーザーごとのデータ絞り込み処理
-//		// データベースからアカウント情報を取得する
-//	    Users user = usersRepository.findById(userName).get();
-//	    //allTasksリストをストリームにして新たなnotAdminTasksリストにする
-//		List<Tasks> notAdminTasks = allTasks.stream()
-//				//タスクのユーザーネームとアカウントのユーザーネームが同じものをフィルターかける
-//				.filter(t -> t.getName() .equals (user.getName()))
-//				//フィルターをかけたものを新たなリストとして生成
-//				.collect(Collectors.toList());
-//		
-//		for(int i=0;i<notAdminTasks.size();i++) {
-//			tasks.add(notAdminTasks.get(i).getDate(), notAdminTasks.get(i));	
-//		}
-			
-		
 	
 
 }
