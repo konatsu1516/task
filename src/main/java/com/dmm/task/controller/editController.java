@@ -15,37 +15,38 @@ import com.dmm.task.service.AccountUserDetails;
 
 @Controller
 public class editController {
-	
-	@Autowired //@Autowiredアノテーションを付けると、Spring Bootが自動でインスタンスをInjectします。
-	  private TasksRepository taskRepository;
-	
+
+	@Autowired // @Autowiredアノテーションを付けると、Spring Bootが自動でインスタンスをInjectします。
+	private TasksRepository taskRepository;
+
 	@GetMapping("/main/edit/{id}")
-    public String edit(@PathVariable("id") Integer id,Model model) {
-		//idを使ってデータを取る
-		//取ってきたタスクの内容を渡す
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		// idを使ってデータを取る
+		// 取ってきたタスクの内容を渡す
 		Tasks myTask = taskRepository.findById(id).get();
 		model.addAttribute("task", myTask);
-        return "edit";
-    }
-	
+		return "edit";
+	}
+
 	@PostMapping("/main/edit/{id}")
-    public String mainCreate(Model model,@PathVariable("id") Integer id,TasksForm tasksForm, @AuthenticationPrincipal AccountUserDetails user) {
+	public String mainCreate(Model model, @PathVariable("id") Integer id, TasksForm tasksForm,
+			@AuthenticationPrincipal AccountUserDetails user) {
 		Tasks myTask = taskRepository.findById(id).get();
-		 myTask.setName(user.getName());
-	     myTask.setTitle(tasksForm.getTitle());
-	     myTask.setDate(tasksForm.getDate());
-	     myTask.setText(tasksForm.getText());
-	     myTask.setDone(tasksForm.isDone());
+		myTask.setName(user.getName());
+		myTask.setTitle(tasksForm.getTitle());
+		myTask.setDate(tasksForm.getDate());
+		myTask.setText(tasksForm.getText());
+		myTask.setDone(tasksForm.isDone());
 		taskRepository.save(myTask);
 
-      return "redirect:/main";
+		return "redirect:/main";
 
-    }
+	}
 
-	 @PostMapping("/main/delete/{id}")
-     public String deleteTask(@PathVariable("id") Integer id) {
- 		// 指定したIDのユーザーを削除
-		 taskRepository.deleteById(id);
- 		return "redirect:/main";
- 	}
+	@PostMapping("/main/delete/{id}")
+	public String deleteTask(@PathVariable("id") Integer id) {
+		// 指定したIDのユーザーを削除
+		taskRepository.deleteById(id);
+		return "redirect:/main";
+	}
 }
