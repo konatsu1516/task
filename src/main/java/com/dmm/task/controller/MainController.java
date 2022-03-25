@@ -20,7 +20,7 @@ import com.dmm.task.data.repository.TasksRepository;
 import com.dmm.task.service.AccountUserDetails;
 
 @Controller
-public class mainController {
+public class MainController {
 	@Autowired // @Autowiredアノテーションを付けると、Spring Bootが自動でインスタンスをInjectします。
 	private TasksRepository taskRepository;
 
